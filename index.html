@@ -1,0 +1,665 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Questões de Creche</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: coluna única estreita, cabeçalho com blocos de montar, cartões por modo de estudo */
+:root{
+  --bg:#F4F6FB; --surface:#FFFFFF; --fg:#17203A; --muted:#5B6682; --line:#DCE2EF;
+  --accent:#3355E8; --accent-fg:#FFFFFF; --accent-soft:#E6EBFD;
+  --ok:#178A4C; --ok-bg:#E3F5EA; --bad:#C23A3A; --bad-bg:#FBE7E7; --warn:#A35F00; --warn-bg:#FFF1D6;
+  --f-display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1424; --surface:#171E33; --fg:#E9EDF8; --muted:#9BA6C4; --line:#2A3454;
+    --accent:#8EA2FF; --accent-fg:#0F1424; --accent-soft:#222C55;
+    --ok:#52D08B; --ok-bg:#123324; --bad:#FF8A8A; --bad-bg:#3A1A21; --warn:#F2B24C; --warn-bg:#3A2D10;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1424; --surface:#171E33; --fg:#E9EDF8; --muted:#9BA6C4; --line:#2A3454;
+  --accent:#8EA2FF; --accent-fg:#0F1424; --accent-soft:#222C55;
+  --ok:#52D08B; --ok-bg:#123324; --bad:#FF8A8A; --bad-bg:#3A1A21; --warn:#F2B24C; --warn-bg:#3A2D10;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.5;
+  padding-block:20px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:880px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);margin:0;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:1.35rem}
+p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.top{display:flex;align-items:center;gap:14px;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px;min-width:0}
+.blocks{display:grid;grid-template-columns:repeat(2,16px);grid-auto-rows:16px;gap:3px;flex:none}
+.blocks i{border-radius:4px;display:block}
+.brand h1{font-size:1.5rem;line-height:1.1}
+.brand small{display:block;color:var(--muted);font-size:.82rem}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:10px 16px;font-weight:600;min-height:44px}
+.btn:hover{border-color:var(--accent)}
+.btn.pri{background:var(--accent);color:var(--accent-fg);border-color:var(--accent)}
+.btn.pri:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.sm{min-height:36px;padding:6px 12px;font-size:.9rem}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px}
+.stat b{display:block;font-family:var(--f-display);font-size:2rem;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{color:var(--muted);font-size:.88rem}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:12px;margin-bottom:24px}
+.mode{text-align:left;display:flex;flex-direction:column;gap:6px;min-height:132px}
+.mode:hover{border-color:var(--accent)}
+.mode h3{font-size:1.15rem}
+.mode p{color:var(--muted);font-size:.92rem}
+.mode .tag{margin-top:auto;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.sec{margin:26px 0 10px;display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.catrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-top:1px solid var(--line)}
+.catrow:first-child{border-top:0}
+.catname{display:flex;gap:10px;align-items:center;min-width:0;font-weight:600}
+.dot{width:12px;height:12px;border-radius:3px;flex:none;display:inline-block}
+.seg{display:flex;height:10px;border-radius:5px;overflow:hidden;background:var(--line)}
+.seg i{display:block;height:100%}
+.seg .s-ok{background:var(--ok)} .seg .s-bad{background:var(--bad)}
+.catnum{font-size:.82rem;color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+@media (max-width:560px){.catrow{grid-template-columns:1fr auto}.catrow .seg{grid-column:1/-1;order:3}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:.88rem;font-weight:600;display:inline-flex;align-items:center;gap:8px;min-height:36px}
+.chip[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--fg)}
+.field{display:grid;gap:8px;margin-bottom:18px}
+.field>label,.field>.lbl{font-weight:700;font-size:.92rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.hint{color:var(--muted);font-size:.88rem}
+.bar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.pill{border-radius:999px;padding:4px 12px;font-weight:700;font-size:.88rem;background:var(--accent-soft);font-variant-numeric:tabular-nums}
+.pill.low{background:var(--bad-bg);color:var(--bad)}
+.cattag{display:inline-flex;gap:8px;align-items:center;font-size:.8rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.qtext{font-family:var(--f-display);font-size:1.3rem;font-weight:600;line-height:1.3;margin-bottom:16px;text-wrap:pretty}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;background:var(--surface);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;min-height:48px}
+.opt:hover:not(:disabled){border-color:var(--accent)}
+.opt .ltr{flex:none;width:26px;height:26px;border-radius:7px;background:var(--accent-soft);display:grid;place-items:center;font-weight:800;font-size:.85rem}
+.opt.sel{border-color:var(--accent);background:var(--accent-soft)}
+.opt.ok{border-color:var(--ok);background:var(--ok-bg)}
+.opt.ok .ltr{background:var(--ok);color:var(--bg)}
+.opt.bad{border-color:var(--bad);background:var(--bad-bg)}
+.opt.bad .ltr{background:var(--bad);color:var(--bg)}
+.opt.dim{opacity:.6}
+.opt:disabled{cursor:default;color:var(--fg)}
+.fb{margin-top:16px;border-radius:12px;padding:14px 16px;border:1px solid var(--line)}
+.fb.ok{background:var(--ok-bg);border-color:var(--ok)}
+.fb.bad{background:var(--bad-bg);border-color:var(--bad)}
+.fb.to{background:var(--warn-bg);border-color:var(--warn)}
+.fb h3{font-size:1.05rem;margin-bottom:6px}
+.fb p+p{margin-top:8px}
+.fb .why b{display:block;font-size:.78rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+.nav{display:flex;justify-content:space-between;gap:10px;margin-top:18px;flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;margin-top:16px}
+.gn{border:1.5px solid var(--line);background:var(--surface);border-radius:8px;min-height:40px;font-weight:700;font-variant-numeric:tabular-nums}
+.gn.done{background:var(--accent-soft);border-color:var(--accent)}
+.gn.flag{border-color:var(--warn);box-shadow:inset 0 -4px 0 var(--warn)}
+.gn.cur{outline:3px solid var(--accent);outline-offset:1px}
+.timerbar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-bottom:14px}
+.timerbar i{display:block;height:100%;background:var(--accent);width:100%}
+.timerbar.low i{background:var(--bad)}
+.score{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.score .big{font-family:var(--f-display);font-size:3.4rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums}
+.verdict{font-weight:700;border-radius:999px;padding:4px 14px;display:inline-block}
+.verdict.ok{background:var(--ok-bg);color:var(--ok)} .verdict.bad{background:var(--bad-bg);color:var(--bad)} .verdict.mid{background:var(--warn-bg);color:var(--warn)}
+details.rv{border:1px solid var(--line);border-left-width:5px;border-radius:12px;background:var(--surface);margin-bottom:10px}
+details.rv.ok{border-left-color:var(--ok)} details.rv.bad{border-left-color:var(--bad)} details.rv.na{border-left-color:var(--warn)}
+details.rv>summary{cursor:pointer;padding:12px 14px;display:flex;gap:10px;align-items:flex-start;list-style:none;min-height:48px}
+details.rv>summary::-webkit-details-marker{display:none}
+details.rv>summary .mk{flex:none;font-weight:800;width:22px}
+details.rv.ok .mk{color:var(--ok)} details.rv.bad .mk{color:var(--bad)} details.rv.na .mk{color:var(--warn)}
+details.rv .inner{padding:0 14px 14px}
+.search{width:100%;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:10px;padding:10px 14px;font:inherit;min-height:44px}
+select.search{width:auto;min-width:200px}
+.hist li{display:flex;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line);font-size:.92rem}
+.hist{list-style:none;margin:0;padding:0}
+.hist li:first-child{border-top:0}
+.empty{color:var(--muted);text-align:center;padding:28px 8px}
+.lib-meta{display:flex;gap:10px;flex-wrap:wrap;font-size:.82rem;color:var(--muted);margin-top:10px}
+.badge{border-radius:999px;padding:2px 10px;font-size:.76rem;font-weight:700}
+.badge.ok{background:var(--ok-bg);color:var(--ok)} .badge.bad{background:var(--bad-bg);color:var(--bad)} .badge.new{background:var(--line);color:var(--muted)}
+.foot{margin-top:30px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.85rem}
+@media (prefers-reduced-motion:no-preference){.timerbar i{transition:width .25s linear}}
+</style>
+
+<div class="wrap" id="app"></div>
+
+<script>
+/* ===== Banco de perguntas =====
+   Formato: [categoria, pergunta, [correta, errada, errada, errada], explicação]
+   A ordem das alternativas é embaralhada a cada vez que a pergunta aparece. */
+const CATS={
+  leg:["Legislação","#4C6FFF"],
+  des:["Desenvolvimento infantil","#E4572E"],
+  cre:["Creche, rotina e adaptação","#F2A900"],
+  cui:["Cuidados e saúde","#1FA971"],
+  soc:["Primeiros socorros e segurança","#D6336C"],
+  pos:["Postura do auxiliar","#8A5CF6"],
+  bri:["Brincar, histórias e música","#00A3C4"],
+  tea:["Autismo (TEA)","#E07BE0"],
+  esp:["Educação especial e inclusiva","#6B7A8F"],
+  eja:["Educação de Jovens e Adultos","#A0723A"]
+};
+const RAW=[
+/* ---------- Legislação ---------- */
+["leg","Qual lei instituiu o Estatuto da Criança e do Adolescente (ECA)?",["Lei nº 8.069/1990","Lei nº 9.394/1996","Lei nº 10.436/2002","Lei nº 13.146/2015"],"O ECA é a Lei 8.069, de 1990. A 9.394/1996 é a LDB, a 10.436/2002 reconhece a Libras e a 13.146/2015 é a Lei Brasileira de Inclusão."],
+["leg","Segundo o ECA, considera-se criança a pessoa de até:",["12 anos incompletos","10 anos incompletos","14 anos completos","18 anos incompletos"],"Criança é quem tem até 12 anos incompletos. Adolescente é quem tem entre 12 e 18 anos."],
+["leg","Qual lei estabelece as Diretrizes e Bases da Educação Nacional (LDB)?",["Lei nº 9.394/1996","Lei nº 8.069/1990","Lei nº 12.764/2012","Lei nº 13.257/2016"],"A LDB é a Lei 9.394, de 1996. É nela que a educação infantil aparece como primeira etapa da educação básica."],
+["leg","De acordo com a LDB, a educação infantil é:",["A primeira etapa da educação básica","Uma etapa opcional, fora da educação básica","A segunda etapa da educação básica","Uma modalidade do ensino superior"],"A educação básica é formada por educação infantil, ensino fundamental e ensino médio, nessa ordem. A educação infantil é a primeira etapa."],
+["leg","Na educação infantil, a creche atende crianças de:",["0 a 3 anos","4 a 5 anos","6 a 10 anos","0 a 12 meses apenas"],"Creche: de 0 a 3 anos (até 3 anos e 11 meses). Pré-escola: de 4 a 5 anos."],
+["leg","A matrícula na educação básica é obrigatória a partir de:",["4 anos de idade","0 anos de idade","3 anos de idade","6 anos de idade"],"Desde a Emenda Constitucional 59/2009 e a Lei 12.796/2013, a obrigatoriedade vai dos 4 aos 17 anos. A creche (0 a 3) é um direito, mas não é obrigatória para a família."],
+["leg","Segundo a LDB, qual é a frequência mínima exigida na educação infantil?",["60% do total de horas","75% do total de horas","80% do total de horas","100% do total de horas"],"A educação infantil exige frequência mínima de 60% do total de horas. Os 75% valem para o ensino fundamental e o médio."],
+["leg","Qual é a carga horária mínima anual da educação infantil prevista na LDB?",["800 horas, distribuídas em no mínimo 200 dias","600 horas, em 150 dias","1.000 horas, em 250 dias","400 horas, em 100 dias"],"A LDB fixa 800 horas anuais distribuídas em pelo menos 200 dias de trabalho educacional."],
+["leg","Na educação infantil, a avaliação deve ser feita por meio de:",["Acompanhamento e registro do desenvolvimento, sem objetivo de promoção","Provas bimestrais com notas","Exames para aprovação no ano seguinte","Classificação das crianças por desempenho"],"A LDB (art. 31) diz que a avaliação é feita mediante acompanhamento e registro do desenvolvimento, sem o objetivo de promoção, mesmo para o acesso ao ensino fundamental."],
+["leg","Qual é a formação mínima que a LDB admite para a docência na educação infantil?",["Ensino médio na modalidade normal (magistério)","Ensino fundamental completo","Qualquer curso livre de 40 horas","Não há exigência de formação"],"A LDB exige nível superior, mas admite o ensino médio na modalidade normal. Curso livre, como um curso de 40 horas, não habilita para a docência."],
+["leg","Segundo a LDB, qual é a finalidade da educação infantil?",["O desenvolvimento integral da criança até 5 anos, complementando a ação da família e da comunidade","Alfabetizar a criança antes dos 4 anos","Preparar para as provas do ensino fundamental","Substituir o papel da família na educação"],"O art. 29 da LDB fala em desenvolvimento integral (físico, psicológico, intelectual e social), complementando a família e a comunidade, sem substituí-las."],
+["leg","A Constituição Federal garante ao Estado o dever de oferecer educação infantil, em creche e pré-escola, a crianças de até:",["5 anos","3 anos","6 anos","10 anos"],"O art. 208 da Constituição prevê o atendimento em creche e pré-escola às crianças de até 5 anos de idade."],
+["leg","O art. 227 da Constituição determina que os direitos da criança devem ser assegurados com:",["Absoluta prioridade","Prioridade relativa","Prioridade condicionada ao orçamento","Prioridade apenas em casos de risco"],"A criança tem absoluta prioridade, dever compartilhado entre família, sociedade e Estado."],
+["leg","O ECA inclui, entre os aspectos do direito à liberdade da criança:",["Brincar, praticar esportes e divertir-se","Escolher o horário da escola","Trabalhar a partir dos 10 anos","Votar em eleições escolares obrigatórias"],"O art. 16 do ECA inclui brincar, praticar esportes e divertir-se. Por isso o brincar é um direito, não um passatempo."],
+["leg","A Lei 13.010/2014 (Lei Menino Bernardo) garante à criança o direito de ser educada:",["Sem castigos físicos ou tratamento cruel e degradante","Com castigos leves, se a família permitir","Somente pela escola","Com punições físicas moderadas"],"A lei alterou o ECA para proibir o uso de castigo físico ou de tratamento cruel ou degradante como forma de correção ou disciplina."],
+["leg","Ao suspeitar de maus-tratos contra uma criança, o profissional da creche deve:",["Comunicar a direção e o Conselho Tutelar","Esperar a confirmação da família","Confrontar a família por conta própria","Ignorar se não houver marcas visíveis"],"O ECA obriga a comunicar suspeitas ou casos confirmados. Deixar de comunicar pode gerar multa para o responsável pelo estabelecimento de ensino (art. 245). Investigar não é papel do auxiliar."],
+["leg","O Conselho Tutelar é:",["Um órgão permanente e autônomo, não jurisdicional, que zela pelos direitos da criança e do adolescente","Um órgão do Judiciário que julga crianças","Uma entidade privada de assistência","Um setor interno da escola"],"O Conselho Tutelar é um órgão municipal, permanente, autônomo e não jurisdicional. Não julga ninguém: atende, aconselha e encaminha."],
+["leg","O Disque 100 serve para receber denúncias de:",["Violações de direitos humanos, incluindo violência contra crianças","Incêndios","Emergências médicas","Problemas com o transporte escolar"],"O Disque 100 é o canal de denúncias de violações de direitos humanos. Emergências médicas são tratadas pelo SAMU (192)."],
+["leg","A Lei nº 13.257/2016 (Marco Legal da Primeira Infância) considera primeira infância o período de:",["6 anos completos (72 meses)","3 anos completos","0 a 12 meses","8 anos completos"],"O Marco Legal define a primeira infância como os primeiros 6 anos completos, ou 72 meses, de vida."],
+["leg","Qual documento normativo define as aprendizagens essenciais da educação básica brasileira?",["A Base Nacional Comum Curricular (BNCC)","O Plano Diretor do município","O Estatuto da Juventude","O Censo Escolar"],"A BNCC é o documento normativo que define o conjunto de aprendizagens essenciais que todos os alunos devem desenvolver na educação básica."],
+["leg","Quais são os dois eixos estruturantes da educação infantil na BNCC?",["Interações e brincadeira","Leitura e escrita","Memorização e repetição","Alfabetização e cálculo"],"As práticas pedagógicas da educação infantil se estruturam em interações e brincadeira."],
+["leg","Qual das alternativas NÃO é um dos seis direitos de aprendizagem e desenvolvimento da BNCC para a educação infantil?",["Memorizar conteúdos","Brincar","Explorar","Conviver"],"Os seis direitos são: conviver, brincar, participar, explorar, expressar e conhecer-se. Memorizar conteúdos não está entre eles."],
+["leg","Qual destes é um dos cinco campos de experiência da BNCC?",["O eu, o outro e o nós","Língua Portuguesa","Matemática","Ciências da Natureza"],"Os campos são: O eu, o outro e o nós; Corpo, gestos e movimentos; Traços, sons, cores e formas; Escuta, fala, pensamento e imaginação; Espaços, tempos, quantidades, relações e transformações. Os componentes por disciplina são do ensino fundamental."],
+["leg","As Diretrizes Curriculares Nacionais para a Educação Infantil afirmam que as ações de cuidar e educar são:",["Indissociáveis","Independentes entre si","Papéis exclusivos da família","Etapas que se sucedem"],"Na creche, cuidar e educar acontecem juntos: o banho, a troca e a refeição também são momentos educativos."],
+["leg","Pela LGPD (Lei 13.709/2018), o tratamento de dados pessoais de crianças, como fotos e registros, deve ser feito:",["Com consentimento específico de pelo menos um dos pais ou do responsável legal","Sem necessidade de consentimento","Apenas com autorização verbal de qualquer funcionário","Com autorização da própria criança"],"O art. 14 da LGPD exige consentimento específico e em destaque de pelo menos um dos pais ou do responsável. Por isso fotos de crianças não são postadas livremente."],
+["leg","A Lei 11.645/2008 torna obrigatório o estudo da história e da cultura:",["Afro-brasileira e indígena","Apenas europeia","Apenas regional","Somente militar"],"A lei inclui no currículo a história e a cultura afro-brasileira e indígena, o que também vale para a valorização da diversidade na educação infantil."],
+
+/* ---------- Desenvolvimento infantil ---------- */
+["des","Na teoria de Piaget, o estágio sensório-motor acontece, em geral, de:",["0 a 2 anos","2 a 7 anos","7 a 11 anos","A partir dos 12 anos"],"Sensório-motor: 0 a 2 anos. Pré-operatório: 2 a 7. Operatório concreto: 7 a 11. Operatório formal: a partir dos 12."],
+["des","O estágio pré-operatório de Piaget (2 a 7 anos) é marcado principalmente por:",["Função simbólica, faz de conta e pensamento egocêntrico","Raciocínio lógico abstrato","Aprendizado apenas por reflexos","Domínio de hipóteses científicas"],"A criança passa a usar símbolos, como a linguagem, o desenho e o faz de conta, mas ainda tem dificuldade de se colocar no ponto de vista do outro."],
+["des","Quando a criança modifica seus esquemas mentais para lidar com algo novo, Piaget chama esse processo de:",["Acomodação","Assimilação","Maturação","Repressão"],"Assimilação é encaixar o novo no que já se sabe. Acomodação é transformar o esquema para dar conta do novo. O equilíbrio entre os dois é a adaptação."],
+["des","O conceito de zona de desenvolvimento proximal pertence a:",["Vygotsky","Piaget","Montessori","Skinner"],"Para Vygotsky, é a distância entre o que a criança faz sozinha e o que consegue com a mediação de alguém mais experiente."],
+["des","Qual teórico dá grande destaque à afetividade e à relação entre emoção, movimento e inteligência no desenvolvimento infantil?",["Henri Wallon","Jean Piaget","Burrhus Skinner","Jerome Bruner"],"Wallon defende o desenvolvimento integral: afetividade, ato motor e cognição andam juntos."],
+["des","O conceito de objeto transicional (como a naninha ou o paninho) é associado a:",["Winnicott","Vygotsky","Froebel","Paulo Freire"],"Para Winnicott, o objeto transicional ajuda a criança a lidar com a separação da figura de apego e a ganhar segurança."],
+["des","A teoria do apego é associada principalmente a:",["John Bowlby","Maria Montessori","Lev Vygotsky","Célestin Freinet"],"Bowlby estudou o vínculo afetivo da criança com seu cuidador, base para a segurança emocional e para a exploração do mundo."],
+["des","Na teoria de Erik Erikson, a primeira crise psicossocial (0 a 1 ano) é:",["Confiança versus desconfiança","Autonomia versus vergonha","Iniciativa versus culpa","Identidade versus confusão"],"O bebê que tem as necessidades atendidas com consistência constrói confiança básica. Daí a importância de cuidados previsíveis e afetuosos."],
+["des","O método de Maria Montessori valoriza especialmente:",["O ambiente preparado e a autonomia da criança","A memorização e a cópia","O ensino expositivo","A competição entre as crianças"],"Montessori propunha ambientes organizados na altura da criança, com materiais que ela pode escolher e manipular sozinha."],
+["des","Quem criou o primeiro jardim de infância (Kindergarten), em 1837?",["Friedrich Froebel","Jean Piaget","Henri Wallon","Paulo Freire"],"Froebel, educador alemão, criou o Kindergarten e valorizava o jogo e o brincar como forma de aprender."],
+["des","A expressão 'as cem linguagens da criança' está ligada à abordagem de:",["Loris Malaguzzi (Reggio Emilia)","Maria Montessori","Burrhus Skinner","Ovide Decroly"],"Malaguzzi, em Reggio Emilia (Itália), defendia que a criança se expressa de muitas formas: desenho, gesto, música, construção e palavra."],
+["des","Emmi Pikler, do Instituto Lóczy, defende para os bebês:",["O movimento livre, sem posicionar o bebê onde ele ainda não chegou sozinho","Sentar cedo com apoio de almofadas","Usar andadores","Ficar sempre no colo"],"Pikler acreditava que o bebê, ao se mover livremente, desenvolve postura e confiança no próprio corpo."],
+["des","Em geral, os bebês passam a sentar sem apoio por volta de:",["6 meses","2 meses","12 meses","18 meses"],"Em média, aos 6 meses. Os marcos são médias, e cada criança tem seu ritmo, mas atrasos persistentes devem ser comunicados."],
+["des","O controle da cabeça (controle cefálico) costuma aparecer, em geral, por volta de:",["3 a 4 meses","1 mês","8 meses","12 meses"],"Entre 3 e 4 meses, o bebê já sustenta a cabeça quando é colocado sentado ou de bruços."],
+["des","O sorriso social (sorrir em resposta a um rosto ou voz) costuma surgir por volta de:",["2 meses","15 dias","6 meses","1 ano"],"Por volta de 2 meses, o bebê responde sorrindo ao adulto, sinal importante de interação social."],
+["des","Por volta de que idade a maioria das crianças começa a andar sem apoio?",["12 a 15 meses","4 a 6 meses","24 a 30 meses","36 meses"],"A maioria anda entre 12 e 15 meses, com variações normais até cerca de 18 meses. Depois disso, vale observar e comunicar."],
+["des","Para a criança pequena, brincar é:",["A principal forma de aprender e se desenvolver","Uma recompensa após as atividades sérias","Apenas um passatempo","Algo que atrapalha a aprendizagem"],"Na educação infantil, o brincar é central: por meio dele a criança explora, expressa emoções, cria e aprende."],
+["des","O 'cesto dos tesouros', de Elinor Goldschmied, é indicado para bebês que:",["Já sentam sem apoio (cerca de 6 a 9 meses)","São recém-nascidos","Já correm","Já sabem ler"],"O cesto reúne objetos variados e seguros, de materiais naturais, para o bebê explorar com as mãos, a boca e todos os sentidos."],
+
+/* ---------- Creche, rotina e adaptação ---------- */
+["cre","A palavra 'creche' vem do francês e significa originalmente:",["Manjedoura","Escola","Berço","Abrigo de inverno"],"Vem do francês crèche, 'manjedoura', associada à cena do presépio. Foi um termo ligado ao acolhimento de crianças pobres."],
+["cre","O que impulsionou a criação de creches na Europa e, depois, no Brasil?",["A Revolução Industrial e a entrada das mulheres no trabalho fabril","O fim da escravidão","A criação das universidades","A invenção do rádio"],"Com as mães trabalhando nas fábricas, surgiu a necessidade de um lugar para deixar as crianças."],
+["cre","Historicamente, as primeiras creches no Brasil tinham caráter predominantemente:",["Assistencialista","Pedagógico e curricular","Científico","Esportivo"],"O foco era guarda, higiene e alimentação de crianças pobres. Hoje a visão é de direito da criança, com função educativa."],
+["cre","Qual marco reconheceu a creche como direito da criança e dever do Estado no Brasil?",["A Constituição Federal de 1988","O Código de Menores de 1927","A Lei Áurea","O Código Civil de 1916"],"A Constituição de 1988 fez da creche um direito da criança, e não mais um favor às mães trabalhadoras."],
+["cre","Em que ano a LDB integrou a educação infantil à educação básica?",["1996","1930","1971","2016"],"A LDB de 1996 colocou a educação infantil como primeira etapa da educação básica, ligada ao sistema de ensino."],
+["cre","A rotina na creche é importante porque:",["Dá previsibilidade e segurança emocional às crianças","Serve para manter as crianças quietas","Substitui o planejamento do professor","Deve ser rígida e nunca mudar"],"Quando sabem o que vem a seguir (chegada, roda, refeição, sono), as crianças se sentem seguras. A rotina deve ser estável, mas flexível às necessidades de cada uma."],
+["cre","O período de adaptação (acolhimento) à creche deve ser:",["Gradual, com participação da família","Imediato, sem presença dos pais","Igual para todas as crianças","Evitado se a criança chorar"],"A adaptação costuma ser feita aos poucos, com permanência inicial da família, para construir vínculo com os educadores."],
+["cre","Na despedida na hora da chegada, o mais adequado é:",["Avisar a criança que vai embora e se despedir com carinho","Sair escondido enquanto ela se distrai","Prolongar a despedida por muito tempo","Deixar a criança sem explicação"],"Sumir sem avisar quebra a confiança. Uma despedida breve, clara e afetuosa ajuda a criança a entender que a família volta."],
+["cre","O choro de uma criança durante a adaptação é:",["Esperado e deve ser acolhido","Sinal de que ela não deve frequentar a creche","Birra que deve ser ignorada","Motivo para a família levar a criança embora"],"É uma forma de comunicar saudade e insegurança. O educador acolhe, conversa e oferece colo e segurança."],
+["cre","Levar de casa um objeto de apego (como a naninha) na fase de adaptação:",["Pode ajudar a criança a se sentir segura","Deve ser proibido","Atrapalha o desenvolvimento","Só é permitido para bebês de até 3 meses"],"O objeto transicional é uma ponte entre casa e creche e costuma ajudar bastante no acolhimento."],
+["cre","Uma criança de 1 a 3 anos que disputa brinquedos com colegas está:",["Em uma fase esperada, em que ainda aprende a dividir","Sendo mal-educada de propósito","Apresentando um transtorno","Precisando ser castigada"],"Nessa idade, o pensamento é bastante centrado em si. O educador medeia, ajuda a nomear sentimentos e oferece alternativas, sem punir."],
+["cre","Diante de uma mordida entre crianças pequenas, o mais adequado é:",["Cuidar de quem foi mordido, acolher e ajudar quem mordeu a entender o limite","Morder a criança de volta","Isolar quem mordeu por muito tempo","Gritar e humilhar a criança"],"Morder é comum entre 1 e 3 anos e costuma estar ligado à dificuldade de se expressar. A resposta deve ser calma, firme e educativa."],
+["cre","O desfralde (retirada das fraldas) deve ser feito:",["De forma gradual, respeitando a prontidão da criança e em parceria com a família","Em data fixa para todos","Com punição quando houver escapes","Antes de 1 ano de idade"],"Cada criança tem seu ritmo. Escapes são normais, e punir ou envergonhar atrapalha o processo."],
+["cre","O ritmo de sono dos bebês na creche deve ser:",["Respeitado individualmente, dentro do possível","Igual para todos, com horário rígido","Ignorado","Controlado por acordar todos à força"],"Bebês têm ritmos diferentes. O ambiente de descanso deve ser calmo, seguro e com a possibilidade de dormir quando necessário."],
+["cre","A agenda ou caderno de comunicação serve para:",["Manter a troca de informações entre creche e família","Registrar notas de provas","Punir as crianças","Substituir conversas com os pais"],"Ela informa a família sobre alimentação, sono, higiene e ocorrências do dia, e vice-versa. Não substitui o diálogo quando há algo importante."],
+["cre","A roda de conversa na educação infantil favorece principalmente:",["A linguagem oral, a escuta e a convivência","A prova escrita","A memorização de textos","A competição"],"Na roda, as crianças falam, escutam, cantam e combinam coisas juntas, o que desenvolve linguagem e socialização."],
+["cre","O espaço da sala de creche deve ser organizado:",["De forma segura e acessível à altura das crianças","Com todos os brinquedos guardados no alto","Sem materiais à vista","Apenas com mesas e cadeiras em fileiras"],"Materiais ao alcance das crianças promovem autonomia e escolha. O espaço também é um educador."],
+
+/* ---------- Cuidados e saúde ---------- */
+["cui","Quando é obrigatória a lavagem das mãos pelo adulto na creche?",["Antes de lidar com alimentos e depois de trocar fraldas","Apenas no início do dia","Somente se as mãos estiverem visivelmente sujas","Só depois do banheiro adulto"],"Lavar as mãos é a principal medida contra a transmissão de doenças: antes das refeições, após trocas, após usar o banheiro e após assoar o nariz das crianças."],
+["cui","Segundo o Ministério da Saúde, o aleitamento materno deve ser exclusivo até:",["6 meses","2 meses","4 meses","12 meses"],"Até 6 meses, só leite materno. Depois entra a alimentação complementar, mantendo o leite até 2 anos ou mais."],
+["cui","A introdução de alimentos complementares costuma começar aos:",["6 meses","2 meses","3 meses","12 meses"],"Aos 6 meses, quando o bebê demonstra prontidão, começam as papinhas e os pedaços macios, sempre com orientação."],
+["cui","Qual alimento NÃO deve ser oferecido a bebês menores de 1 ano?",["Mel","Banana amassada","Papa de legumes","Maçã cozida"],"O mel pode conter esporos de botulismo, perigosos para bebês menores de 1 ano."],
+["cui","Para o sono seguro do bebê, a posição recomendada é:",["De barriga para cima, em colchão firme, sem objetos soltos no berço","De bruços, com travesseiro","De lado, com cobertores grossos","Em sofá ou cama de adulto"],"Costas para baixo, colchão firme e berço sem travesseiros, pelúcias ou protetores reduzem o risco de morte súbita."],
+["cui","Ao oferecer a mamadeira, o bebê deve estar:",["Semi-sentado, com a cabeça elevada","Deitado de barriga para cima","Sozinho, com a mamadeira apoiada","De bruços"],"Deitado, o bebê pode se engasgar ou ter problemas no ouvido. Segurar no colo cria também vínculo."],
+["cui","Em relação à temperatura da água do banho do bebê, o correto é:",["Testar antes e nunca deixar o bebê sozinho","Colocar na água quente para limpar melhor","Deixar o bebê sozinho por um instante","Usar água gelada"],"A água deve estar morna (cerca de 37 °C). Bebês podem se afogar em poucos centímetros de água, então nunca ficam sozinhos."],
+["cui","Na troca de fraldas, o cuidado correto é:",["Manter sempre uma mão no bebê e limpar de frente para trás","Deixar o bebê sozinho no trocador","Limpar de trás para a frente","Trocar a fralda sem lavar as mãos"],"Segurança (nunca soltar o bebê) e higiene (frente para trás evita infecção urinária, principalmente em meninas) são essenciais."],
+["cui","Qual alimento oferece maior risco de engasgo para crianças pequenas se for servido inteiro?",["Uva","Purê de batata","Banana amassada","Papa de legumes"],"Alimentos redondos, duros ou escorregadios, como uva inteira, pipoca, amendoim e salsicha em rodelas, devem ser cortados ou evitados."],
+["cui","A temperatura axilar a partir da qual geralmente se considera febre é de:",["37,8 °C","36,0 °C","36,5 °C","35,5 °C"],"Em geral, febre é a temperatura axilar de 37,8 °C ou mais. A creche deve avisar a família e seguir o protocolo da instituição."],
+["cui","Em relação a remédios, o auxiliar de creche deve:",["Só administrar com receita médica e autorização por escrito dos responsáveis, conforme o protocolo da creche","Dar o remédio que achar adequado","Dar antitérmico sempre que a criança estiver quente","Pedir que outra criança ajude"],"Medicar é ato de saúde. Sem prescrição e autorização, o auxiliar não administra medicamentos, nem 'por precaução'."],
+["cui","Segundo o ECA, a vacinação das crianças nos casos recomendados pelas autoridades sanitárias é:",["Obrigatória","Opcional","Proibida na creche","Exigida só dos adultos"],"O art. 14 do ECA prevê a vacinação obrigatória nos casos recomendados. A caderneta de vacinação em dia protege toda a turma."],
+["cui","Para crianças menores de 3 anos, os brinquedos devem:",["Não ter peças pequenas que possam ser engolidas e ter selo do Inmetro","Ter muitas peças pequenas","Ser feitos apenas de metal","Ter bordas pontudas"],"Peças pequenas, tintas tóxicas e bordas cortantes são riscos. O selo do Inmetro indica que o brinquedo passou por avaliação de segurança."],
+["cui","Qual é uma medida adequada de segurança no ambiente da creche?",["Proteger tomadas e guardar produtos de limpeza fora do alcance","Deixar produtos de limpeza em um balde na sala","Deixar portas de escada abertas","Guardar facas no cesto de brinquedos"],"A prevenção de acidentes inclui protetores de tomada, portões de segurança e produtos químicos trancados."],
+["cui","Quando a criança chora, o que o educador deve fazer primeiro?",["Procurar entender a causa (fome, sono, fralda, dor, medo ou desejo de colo)","Ignorar para não 'mimar'","Dar bronca","Deixar chorando até parar sozinha"],"O choro é comunicação. Entender e responder fortalece a confiança e o vínculo com o adulto."],
+["cui","Quando a higiene bucal deve começar?",["Assim que surgirem os primeiros dentes (e a limpeza da gengiva antes disso)","Só depois dos 6 anos","Quando todos os dentes de leite nascerem","Só se houver dor"],"Os primeiros dentes já devem ser limpos, de acordo com a orientação do pediatra ou dentista."],
+["cui","Ao trabalhar com crianças com alergia alimentar, o auxiliar deve:",["Conferir o cardápio e a lista de restrições e nunca oferecer alimento sem saber o que contém","Oferecer pequenas quantidades para ver se há reação","Confiar apenas na memória","Servir o mesmo que os outros"],"Alergias podem ser graves. A atenção ao rótulo e ao cardápio individual evita acidentes."],
+
+/* ---------- Primeiros socorros e segurança ---------- */
+["soc","Qual é o número nacional do SAMU?",["192","190","193","180"],"SAMU: 192. Polícia Militar: 190. Bombeiros: 193."],
+["soc","Qual é o telefone dos Bombeiros?",["193","192","190","100"],"Bombeiros: 193. SAMU: 192. Polícia: 190. Disque 100: direitos humanos."],
+["soc","Um bebê com menos de 1 ano engasga e não consegue respirar. Qual é o procedimento recomendado?",["Alternar 5 tapas nas costas e 5 compressões no peito, e chamar o SAMU","Dar tapas fortes e compressões abdominais","Dar água","Virar o bebê de cabeça para cima e sacudir"],"Em lactentes, usam-se tapas interescapulares e compressões torácicas. A manobra de Heimlich (compressões no abdômen) não é usada em bebês pequenos."],
+["soc","Em uma criança maior de 1 ano com engasgo grave, a manobra indicada é:",["Compressões abdominais (Heimlich)","Dar água para empurrar","Colocar o dedo na garganta","Esperar passar"],"Em crianças maiores de 1 ano, utiliza-se a manobra de Heimlich. Se a criança perder a consciência, inicia-se a RCP e chama-se o 192."],
+["soc","Diante de uma queimadura leve, o primeiro cuidado é:",["Resfriar com água corrente em temperatura ambiente","Passar pasta de dente","Passar manteiga","Furar as bolhas"],"A água corrente alivia a dor e reduz a lesão. Substâncias caseiras, como pasta de dente, manteiga e pó de café, aumentam o risco de infecção."],
+["soc","Durante uma crise convulsiva, o correto é:",["Proteger a cabeça, afrouxar a roupa e virar a criança de lado após a crise","Segurar a criança com força","Colocar um objeto na boca","Dar água durante a crise"],"Nunca se coloca nada na boca. Também se marca o tempo: crise com mais de 5 minutos exige chamar o SAMU (192)."],
+["soc","Em caso de sangramento nasal, deve-se:",["Manter a criança sentada, com a cabeça levemente inclinada para frente, e comprimir as narinas","Deitar a criança de costas","Inclinar a cabeça para trás","Colocar algodão fundo no nariz"],"Inclinar para trás faz o sangue ser engolido e pode causar vômito."],
+["soc","Em caso de suspeita de intoxicação, o serviço de orientação toxicológica é:",["Disque-Intoxicação: 0800 722 6001","Disque Saúde: 190","Procon: 151","Disque 100"],"O Disque-Intoxicação (Anvisa) funciona 24 horas e orienta em casos de ingestão de produtos tóxicos. Em casos graves, ligue para o SAMU (192)."],
+["soc","Quando uma criança bate a cabeça em uma queda, o educador deve:",["Observar sinais como vômito, sonolência e irritação, e comunicar a família e a direção","Não dar importância","Dar remédio por conta própria","Deixar a criança dormir sem observar"],"Mesmo sem ferimentos visíveis, deve-se observar e registrar. Sinais de gravidade exigem chamar o SAMU."],
+
+/* ---------- Postura do auxiliar ---------- */
+["pos","Qual é o papel do auxiliar de creche em relação ao professor?",["Apoiar o trabalho pedagógico e os cuidados, sem substituir o professor","Planejar e conduzir sozinho o currículo","Aplicar provas","Substituir o professor sempre que precisar"],"O auxiliar colabora na rotina, nos cuidados e na observação das crianças. O planejamento pedagógico cabe ao professor."],
+["pos","Informações sobre a vida familiar das crianças devem ser tratadas com:",["Sigilo e respeito","Comentários com colegas","Publicação em redes sociais","Divulgação aos outros pais"],"O sigilo profissional protege a criança e a família. Informações importantes são levadas apenas à coordenação ou à direção."],
+["pos","Postar fotos das crianças nas redes sociais pessoais do educador:",["Não deve ser feito sem autorização expressa dos responsáveis e da instituição","É sempre permitido","Só é proibido se a criança chorar","É permitido se o rosto estiver desfocado"],"Imagens de crianças são dados protegidos e podem expô-las a riscos. A instituição define as regras de uso de imagem."],
+["pos","Na relação com a criança pequena, o mais adequado é:",["Abaixar-se à altura dos olhos e usar voz calma","Falar de longe, com voz alta","Usar ameaças","Ignorar quando a criança pede atenção"],"Contato visual e tom de voz acolhedor dão segurança e favorecem a comunicação."],
+["pos","Quando duas crianças brigam por um brinquedo, o educador deve:",["Mediar, ajudar a nomear as emoções e propor soluções","Dar o brinquedo à mais forte","Aplicar castigo físico","Retirar o brinquedo e deixar as duas sem nada, sem conversar"],"Mediar ensina a criança a lidar com conflitos. Castigos físicos são proibidos pelo ECA."],
+["pos","A entrega da criança no fim do dia deve ser feita:",["Somente a pessoas autorizadas pela família e registradas na instituição","A qualquer adulto que a criança reconheça","A quem chegar primeiro","A qualquer pessoa que diga ser parente"],"A segurança exige conferência da autorização. Em caso de dúvida, não se entrega e se avisa a direção."],
+["pos","Ao observar sinais que possam indicar violência (hematomas sem explicação, medo excessivo, retraimento), o auxiliar deve:",["Registrar o que observou e comunicar a direção ou o professor","Investigar por conta própria","Questionar a criança repetidamente","Não fazer nada"],"O auxiliar não investiga nem julga, mas é um observador privilegiado. Registrar e comunicar dentro do protocolo protege a criança."],
+["pos","Quando uma família pergunta se a criança tem algum transtorno, o auxiliar deve:",["Não dar diagnóstico e encaminhar para o professor, a coordenação e a avaliação de profissionais de saúde","Dar o diagnóstico que acha mais provável","Afirmar que a criança é normal","Dizer que a família está errada"],"Diagnosticar é atribuição de profissionais da saúde. O auxiliar descreve o que observa, sem rotular."],
+["pos","Durante o trabalho com as crianças, o uso do celular pelo educador deve:",["Ser evitado, mantendo a atenção e a supervisão constantes","Ser livre durante a rotina","Servir para filmar as crianças sem autorização","Ser prioridade sobre os cuidados"],"Crianças pequenas precisam de supervisão contínua. A distração do adulto é causa comum de acidentes."],
+["pos","A supervisão das crianças pequenas deve ser:",["Constante, sem deixar as crianças sozinhas","Apenas na hora do lanche","Opcional se estiverem quietas","Feita à distância por câmeras apenas"],"Crianças pequenas não avaliam riscos. Em qualquer espaço, deve haver um adulto presente e atento."],
+["pos","Ao conversar com as famílias, o profissional deve:",["Escutar com respeito, comunicar de forma clara e sem julgamentos","Criticar a forma como os pais criam os filhos","Contar fofocas sobre outras famílias","Evitar o contato"],"A parceria com a família é um pilar da educação infantil e se constrói com diálogo e respeito."],
+["pos","O que é correto sobre o uso de castigos e humilhação para disciplinar crianças?",["São proibidos: a disciplina deve ser feita com combinados, diálogo e limites claros","São aceitáveis em casos leves","Devem ser usados com crianças mais agitadas","Ajudam a criança a ter respeito"],"Castigos físicos, humilhação e tratamento degradante são proibidos (ECA e Lei 13.010/2014) e prejudicam o desenvolvimento."],
+["pos","O registro das observações sobre as crianças serve para:",["Acompanhar o desenvolvimento e subsidiar o planejamento do professor","Rotular as crianças","Divulgar para outras famílias","Classificar quem 'é melhor'"],"Os registros do cotidiano ajudam a equipe a conhecer cada criança e a planejar com base nas necessidades observadas."],
+
+/* ---------- Brincar, histórias e música ---------- */
+["bri","A contação de histórias para crianças pequenas favorece:",["A linguagem, a imaginação e o vínculo afetivo","Apenas o silêncio","A memorização de textos longos","A competição entre as crianças"],"Ouvir histórias amplia o vocabulário, desenvolve a imaginação, a escuta e o gosto pela leitura."],
+["bri","Ao contar histórias para crianças pequenas, o mais adequado é:",["Variar a entonação, mostrar as imagens e permitir a participação das crianças","Ler rápido e sem olhar para elas","Contar histórias apenas de terror","Proibir interrupções"],"Voz expressiva, gestos e interação mantêm a atenção e dão sentido à narrativa."],
+["bri","Livros indicados para bebês costumam ser:",["De pano, plástico ou papel cartão resistente, com imagens grandes","Livros longos sem figuras","Livros frágeis de papel fino","Apenas livros de cálculo"],"Bebês exploram com as mãos e a boca. Livros resistentes e com figuras simples e coloridas são apropriados."],
+["bri","As cantigas de roda e músicas infantis contribuem para:",["A coordenação motora, o ritmo, a memória, a socialização e a cultura popular","Apenas ocupar o tempo","A disciplina por silêncio","A competição"],"A música integra corpo, linguagem e emoção e preserva a cultura popular."],
+["bri","Uma atividade sensorial adequada para bebês é:",["Explorar tecidos de texturas variadas e objetos seguros","Usar tinta com peças pequenas à boca","Oferecer brinquedos com pilhas expostas","Dar folhas de exercício"],"A exploração sensorial supervisionada com materiais seguros estimula tato, visão e audição."],
+["bri","O 'tempo de bruços' supervisionado, para bebês acordados, ajuda a:",["Fortalecer o pescoço, os ombros e o tronco","Substituir a posição de dormir","Fazer o bebê dormir mais","Evitar a necessidade de brincar"],"Fazer o bebê ficar de bruços, acordado e com o adulto por perto, estimula o desenvolvimento motor. Para dormir, a posição segura é de barriga para cima."],
+["bri","Qual atividade é apropriada para crianças de 2 a 3 anos para o desenvolvimento motor?",["Circuito motor com túneis, almofadas e obstáculos seguros","Copiar textos do quadro","Ficar sentado por 2 horas","Fazer provas de múltipla escolha"],"Correr, pular, rastejar e equilibrar-se são atividades fundamentais nessa fase."],
+["bri","A pintura com as mãos e a massinha de modelar ajudam a desenvolver:",["A coordenação motora fina e a criatividade","Apenas a bagunça","A habilidade de copiar letras","Somente o equilíbrio"],"Manipular tintas e massas fortalece as mãos e permite a expressão livre, preparando a criança para usar lápis mais tarde."],
+["bri","O brincar de faz de conta (brincar simbólico) é importante porque:",["Desenvolve a imaginação, a linguagem e a compreensão do mundo social","Mostra que a criança está confusa","Deve ser substituído por tarefas","Só serve para meninas"],"Ao 'ser' o médico, a mãe ou o motorista, a criança elabora papéis sociais, emoções e regras."],
+
+/* ---------- Autismo (TEA) ---------- */
+["tea","O Transtorno do Espectro Autista (TEA) é caracterizado principalmente por:",["Dificuldades na comunicação e na interação social e comportamentos ou interesses repetitivos e restritos","Dificuldade exclusiva de aprendizagem de matemática","Problemas auditivos","Falta de carinho dos pais"],"Segundo o DSM-5, o TEA envolve alterações na comunicação social e padrões repetitivos ou restritos de comportamento, com características desde a infância."],
+["tea","Qual afirmação sobre o autismo é CORRETA?",["É um transtorno do neurodesenvolvimento e não é causado por falta de afeto dos pais","É causado por criação inadequada","Pode ser curado com disciplina rígida","Afeta apenas meninos"],"A teoria da 'mãe geladeira' foi refutada. O TEA tem origem no neurodesenvolvimento, com forte componente genético."],
+["tea","Quem pode fazer o diagnóstico de TEA?",["Profissionais de saúde habilitados, em avaliação clínica, em geral por equipe multidisciplinar","O auxiliar de creche","Qualquer pessoa que conviva com a criança","Um teste de internet"],"O diagnóstico é clínico. A creche pode observar, registrar e comunicar sinais, mas nunca diagnosticar."],
+["tea","O Dia Mundial de Conscientização do Autismo é comemorado em:",["2 de abril","21 de março","8 de setembro","12 de outubro"],"2 de abril, com campanha em azul. O 21 de março é o Dia da Síndrome de Down."],
+["tea","O que significa ecolalia?",["A repetição de palavras ou frases ouvidas","A ausência total de som","A dificuldade de ouvir","O medo de falar em público"],"Pode ser imediata ou tardia, e muitas vezes tem função de comunicação ou de organização."],
+["tea","Movimentos repetitivos, como balançar o corpo ou bater as mãos (estereotipias), em crianças com TEA:",["São comuns e podem ter função de autorregulação","Devem ser proibidos","Sempre significam dor","Mostram falta de educação"],"Muitas vezes ajudam a regular emoções ou estímulos. Só é preciso intervir se houver risco ou autoagressão."],
+["tea","Muitas crianças com TEA apresentam sensibilidade sensorial aumentada. Qual medida pode ajudar?",["Reduzir ruídos e luzes fortes e oferecer um cantinho calmo","Aumentar o volume da música","Forçar a criança a participar","Dispensar a criança das atividades"],"Barulhos, cheiros, texturas e luzes podem ser desconfortáveis. Ajustes simples no ambiente fazem diferença."],
+["tea","Quando uma criança com TEA entra em crise (sobrecarga sensorial), o melhor é:",["Manter a calma, reduzir estímulos e oferecer segurança","Gritar para controlar a criança","Aplicar castigo","Segurar à força sem necessidade"],"A crise não é birra: é um sinal de sobrecarga. Diminuir estímulos, falar pouco e com tom calmo ajuda a criança a se reorganizar."],
+["tea","Qual recurso ajuda a antecipar a rotina de crianças com TEA?",["Quadro de rotina com imagens (apoio visual)","Mudar a rotina sem avisar","Explicações longas e abstratas","Rotina diferente a cada dia"],"A rotina visual dá previsibilidade, reduz a ansiedade e ajuda a criança a se organizar."],
+["tea","O sistema PECS (Sistema de Comunicação por Troca de Figuras) é um exemplo de:",["Comunicação alternativa","Terapia medicamentosa","Teste de inteligência","Método de alfabetização"],"O PECS usa figuras para a criança fazer pedidos e se comunicar, como parte da comunicação alternativa e aumentativa."],
+["tea","Qual lei instituiu a Política Nacional de Proteção dos Direitos da Pessoa com TEA?",["Lei nº 12.764/2012 (Lei Berenice Piana)","Lei nº 8.069/1990","Lei nº 10.098/2000","Lei nº 7.853/1989"],"A Lei Berenice Piana considera a pessoa com TEA como pessoa com deficiência, para todos os efeitos legais."],
+["tea","A Lei Romeo Mion (Lei nº 13.977/2020) criou:",["A Carteira de Identificação da Pessoa com TEA (Ciptea)","O Dia do Autismo","O Estatuto do Idoso","A obrigatoriedade da Libras"],"A Ciptea facilita o acesso prioritário a serviços de saúde, educação e assistência social."],
+["tea","Segundo a Lei 12.764/2012, o aluno com TEA incluído em classe comum, com comprovada necessidade, tem direito a:",["Acompanhante especializado","Redução obrigatória da carga horária","Isenção da matrícula","Turma separada obrigatoriamente"],"É o que prevê o parágrafo único do art. 3º. A recusa de matrícula, por sua vez, pode gerar punição."],
+["tea","Qual pode ser um sinal de alerta precoce para TEA?",["Não responder quando chamado pelo nome e raramente apontar ou mostrar objetos","Chorar ao ser separado dos pais","Gostar de brincar com outras crianças","Ter medo de escuro"],"Pouco contato visual, ausência de apontar, de balbucio e de resposta ao nome são sinais para observar. Eles não confirmam diagnóstico e indicam que se deve conversar com a família e a coordenação."],
+
+/* ---------- Educação especial e inclusiva ---------- */
+["esp","O público-alvo da educação especial na perspectiva inclusiva inclui:",["Pessoas com deficiência, transtornos globais do desenvolvimento (TEA) e altas habilidades/superdotação","Apenas estudantes com deficiência física","Apenas crianças de baixa renda","Todos os estudantes com dificuldade em matemática"],"É a definição da Política Nacional de Educação Especial na Perspectiva da Educação Inclusiva (2008)."],
+["esp","O AEE (Atendimento Educacional Especializado) é:",["Um serviço complementar ou suplementar, em geral no contraturno, que não substitui a escolarização","Um substituto do ensino regular","Uma turma exclusiva para alunos com deficiência","Um reforço de conteúdos escolares"],"O AEE ocorre geralmente na sala de recursos multifuncionais e oferece recursos de acessibilidade e estratégias para o aluno participar da turma comum."],
+["esp","A diferença entre integração e inclusão é que:",["Na inclusão, a escola se transforma para acolher todos os alunos","Na integração, a escola se adapta ao aluno","São sinônimos","A inclusão só vale para adultos"],"Na integração, o aluno deveria se adaptar. Na inclusão, a escola remove barreiras e se organiza para todos."],
+["esp","A Declaração de Salamanca (1994) é um marco internacional sobre:",["Princípios, política e prática em educação especial e inclusiva","Alimentação escolar","Trabalho infantil","Direitos autorais"],"Ela defende que as escolas comuns acolham todas as crianças, independentemente de suas condições."],
+["esp","A Lei Brasileira de Inclusão (Lei nº 13.146/2015) também é conhecida como:",["Estatuto da Pessoa com Deficiência","Estatuto da Criança","Lei Maria da Penha","Lei do Idoso"],"A LBI assegura e promove os direitos e as liberdades fundamentais das pessoas com deficiência."],
+["esp","Qual lei reconhece a Língua Brasileira de Sinais (Libras)?",["Lei nº 10.436/2002","Lei nº 8.069/1990","Lei nº 9.394/1996","Lei nº 12.764/2012"],"A Lei 10.436/2002 reconhece a Libras como meio legal de comunicação e expressão, e não como língua escrita nem como simples gestos."],
+["esp","Recusar a matrícula de um aluno por motivo de deficiência é:",["Crime, punível com reclusão","Um direito da escola","Permitido em caso de falta de vagas especiais","Apenas uma infração administrativa leve"],"É crime previsto na Lei 7.853/1989 (com alterações pela LBI): recusar, suspender, procrastinar, cancelar ou fazer cessar a matrícula por motivo de deficiência."],
+["esp","Qual é o termo atualmente correto?",["Pessoa com deficiência","Portador de deficiência","Deficiente","Pessoa especial"],"A Convenção da ONU sobre os Direitos das Pessoas com Deficiência adotou 'pessoa com deficiência'. Deficiência não é algo que se 'porta'."],
+["esp","Preconceito, estereótipos e discriminação são exemplos de barreiras:",["Atitudinais","Arquitetônicas","Tecnológicas","Urbanísticas"],"A LBI classifica barreiras em urbanísticas, arquitetônicas, nos transportes, nas comunicações e na informação, tecnológicas e atitudinais."],
+["esp","Tecnologia assistiva é:",["Recurso, produto ou serviço que amplia a autonomia e a participação da pessoa com deficiência","Qualquer computador da escola","Um tipo de remédio","Um método de punição"],"Exemplos: lupa, prancha de comunicação, cadeira adaptada, engrossador de lápis e leitores de tela."],
+["esp","O Plano Educacional Individualizado (PEI) tem como objetivo:",["Definir estratégias e adaptações para o aluno participar e aprender na turma comum","Separar o aluno da turma","Substituir o currículo comum","Avaliar apenas a família"],"O PEI é construído com professores, AEE e família e orienta o trabalho com as potencialidades do aluno."],
+["esp","A Síndrome de Down é causada por:",["Uma cópia extra do cromossomo 21 (trissomia do 21)","Falta de estímulo na infância","Falta de carinho","Contágio por vírus"],"É uma condição genética. O Dia Internacional da Síndrome de Down é 21/03, em referência ao cromossomo 21."],
+["esp","Segundo a LDB, a educação especial é:",["Uma modalidade de educação escolar oferecida preferencialmente na rede regular de ensino","Uma etapa do ensino superior","Um nível da educação básica","Um programa exclusivo de escolas particulares"],"A educação especial é modalidade que atravessa todas as etapas e níveis, com atendimento preferencialmente na rede regular."],
+
+/* ---------- EJA ---------- */
+["eja","A Educação de Jovens e Adultos (EJA) destina-se a:",["Quem não teve acesso ou continuidade de estudos no ensino fundamental e médio na idade própria","Apenas crianças de 6 a 10 anos","Apenas idosos","Apenas ao ensino superior"],"A LDB (art. 37) define a EJA para quem não pôde estudar na idade certa."],
+["eja","A idade mínima para cursos e exames de EJA no ensino fundamental e médio é, respectivamente, de:",["15 e 18 anos","12 e 15 anos","18 e 21 anos","14 e 16 anos"],"A LDB (art. 38) prevê 15 anos para o fundamental e 18 anos para o médio."],
+["eja","Quem é o patrono da educação brasileira?",["Paulo Freire","Anísio Teixeira","Darcy Ribeiro","Fernando de Azevedo"],"A Lei 12.612/2012 declarou Paulo Freire patrono da educação brasileira, em reconhecimento à sua contribuição à alfabetização de adultos."],
+["eja","Para Paulo Freire, o ponto de partida da alfabetização de adultos deve ser:",["A realidade e a leitura de mundo dos educandos","A cópia de textos","A memorização de cartilhas","A punição dos erros"],"A leitura do mundo precede a leitura da palavra. As palavras geradoras vêm da vivência dos alunos."],
+["eja","Qual é a obra mais conhecida de Paulo Freire?",["Pedagogia do Oprimido","A Interpretação dos Sonhos","Emílio","O Capital"],"Publicada em 1968, é uma das obras mais citadas no mundo sobre educação e defende uma educação dialógica e libertadora."],
+["eja","Uma característica importante dos alunos da EJA é que:",["Trazem experiências de vida e trabalho que devem ser valorizadas","Não sabem nada","Devem ser tratados como crianças","Aprendem apenas por decoreba"],"Os adultos têm saberes prévios. Respeitá-los e reconhecê-los aumenta a permanência e o engajamento."],
+["eja","O Encceja é:",["O Exame Nacional para Certificação de Competências de Jovens e Adultos","Um exame de ingresso em universidades","Uma prova do ensino infantil","Um concurso público"],"Ele permite certificar o ensino fundamental ou médio para quem não concluiu os estudos na idade própria."],
+["eja","O Dia Internacional da Alfabetização é comemorado em:",["8 de setembro","21 de março","15 de outubro","2 de abril"],"Data instituída pela UNESCO, em 8 de setembro."]
+];
+const Q=RAW.map((r,i)=>({id:i,cat:r[0],q:r[1],o:r[2],e:r[3]}));
+
+/* ===== Estado e armazenamento ===== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function load(){try{const j=JSON.parse(localStorage.getItem('qcreche1')||'null');if(j&&j.h)return j}catch(e){}return{h:{},sess:[],best:0}}
+let store=load();
+function save(){try{localStorage.setItem('qcreche1',JSON.stringify(store))}catch(e){}}
+function record(id,ok,pickedText){
+  const h=store.h[id]||(store.h[id]={r:0,w:0,last:null,lp:null});
+  if(ok)h.r++;else{h.w++;h.lp=pickedText}
+  h.last=ok?'r':'w';save();
+}
+function status(id){const h=store.h[id];return !h?'new':(h.last==='r'?'ok':'bad')}
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function present(id){return{id,order:shuffle([0,1,2,3]),picked:null,flag:false}}
+function isOk(p){return p.picked!=null&&p.picked>=0&&p.order[p.picked]===0}
+function fmt(s){const h=Math.floor(s/3600),m=Math.floor(s%3600/60),x=s%60;const p=n=>String(n).padStart(2,'0');return (h?h+':':'')+p(m)+':'+p(x)}
+const S={view:'home',sel:new Set(),prio:true,exN:20,pace:90,lib:{cat:'all',st:'all',q:''},onlyWrong:false,tid:null,confirmReset:false};
+function pool(){return Q.filter(q=>!S.sel.size||S.sel.has(q.cat)).map(q=>q.id)}
+function stopTimer(){if(S.tid){clearInterval(S.tid);S.tid=null}}
+function go(v){stopTimer();S.view=v;S.confirmReset=false;render();window.scrollTo(0,0)}
+
+/* ===== Componentes ===== */
+function header(){
+  const cols=Object.values(CATS).map(c=>c[1]).slice(0,4);
+  return `<div class="top"><div class="brand"><div class="blocks" aria-hidden="true">${cols.map(c=>`<i style="background:${c}"></i>`).join('')}</div>
+  <div><h1>Questões de Creche</h1><small>${Q.length} perguntas para o curso e o concurso</small></div></div>
+  ${S.view!=='home'?'<button class="btn" data-act="home">← Início</button>':''}</div>`;
+}
+function chips(){
+  return `<div class="chips" role="group" aria-label="Categorias">
+  <button class="chip" aria-pressed="${S.sel.size===0}" data-act="allcats">Todas</button>
+  ${Object.entries(CATS).map(([k,c])=>`<button class="chip" aria-pressed="${S.sel.has(k)}" data-act="togcat" data-c="${k}"><span class="dot" style="background:${c[1]}"></span>${esc(c[0])}</button>`).join('')}</div>`;
+}
+function catTag(cat){const c=CATS[cat];return `<div class="cattag"><span class="dot" style="background:${c[1]}"></span>${esc(c[0])}</div>`}
+function opts(p,mode){
+  const q=Q[p.id],corr=p.order.indexOf(0);
+  const showState=mode==='review'||(mode!=='exam'&&p.picked!=null);
+  return '<div class="opts">'+p.order.map((oi,di)=>{
+    let cls='opt';
+    if(mode==='exam'){if(p.picked===di)cls+=' sel'}
+    else if(showState){if(di===corr)cls+=' ok';else if(di===p.picked)cls+=' bad';else cls+=' dim'}
+    const dis=(mode==='review'||(mode!=='exam'&&p.picked!=null))?' disabled':'';
+    return `<button class="${cls}" data-act="pick" data-i="${di}"${dis}><span class="ltr">${'ABCD'[di]}</span><span>${esc(q.o[oi])}</span></button>`;
+  }).join('')+'</div>';
+}
+function explain(p,timeout){
+  const q=Q[p.id],ok=isOk(p);
+  const chosen=p.picked!=null&&p.picked>=0?q.o[p.order[p.picked]]:null;
+  const head=ok?'Acertou!':(timeout?'Acabou o tempo':'Errou');
+  let body='';
+  if(!ok){
+    if(chosen)body+=`<p><b>Você marcou:</b> ${esc(chosen)}</p>`;
+    body+=`<p><b>Resposta certa:</b> ${esc(q.o[0])}</p>`;
+  }
+  return `<div class="fb ${ok?'ok':(timeout?'to':'bad')}" role="status"><h3>${head}</h3>${body}<div class="why"><p style="margin-top:10px"><b>Por quê</b>${esc(q.e)}</p></div></div>`;
+}
+
+/* ===== Início ===== */
+function homeV(){
+  const ids=Object.keys(store.h).map(Number).filter(i=>Q[i]);
+  const ans=ids.length;
+  const okN=ids.filter(i=>store.h[i].last==='r').length,badN=ids.filter(i=>store.h[i].last==='w').length;
+  let r=0,w=0;ids.forEach(i=>{r+=store.h[i].r;w+=store.h[i].w});
+  const pct=(r+w)?Math.round(r/(r+w)*100):0;
+  const cats=Object.entries(CATS).map(([k,c])=>{
+    const all=Q.filter(q=>q.cat===k),n=all.length;
+    const o=all.filter(q=>status(q.id)==='ok').length,b=all.filter(q=>status(q.id)==='bad').length;
+    return `<div class="catrow"><div class="catname"><span class="dot" style="background:${c[1]}"></span>${esc(c[0])}</div>
+    <div class="seg" role="img" aria-label="${o} acertos, ${b} erros, de ${n}"><i class="s-ok" style="width:${o/n*100}%"></i><i class="s-bad" style="width:${b/n*100}%"></i></div>
+    <div class="catnum">${o}/${n} dominadas</div></div>`}).join('');
+  const sess=store.sess.slice(-5).reverse();
+  return `<div class="stats">
+    <div class="card stat"><b>${ans}</b><span>de ${Q.length} perguntas já vistas</span></div>
+    <div class="card stat"><b>${pct}%</b><span>de aproveitamento geral</span></div>
+    <div class="card stat"><b>${badN}</b><span>para revisar (último resultado foi erro)</span></div></div>
+  <div class="modes">
+    <button class="card mode" data-act="go" data-v="practiceSetup"><span class="tag">Sem limite</span><h3>Treino sem limites</h3><p>Perguntas sem parar, com resposta e explicação na hora. Os erros voltam primeiro.</p></button>
+    <button class="card mode" data-act="go" data-v="examSetup"><span class="tag">Com tempo</span><h3>Modo prova</h3><p>Simulado cronometrado. O gabarito e a explicação só aparecem no final.</p></button>
+    <button class="card mode" data-act="go" data-v="quizSetup"><span class="tag">Rápido</span><h3>Quiz</h3><p>10 perguntas, 20 segundos cada. Pontos por velocidade e sequência de acertos.</p></button>
+    <button class="card mode" data-act="go" data-v="library"><span class="tag">Biblioteca</span><h3>Todas as perguntas</h3><p>Filtre por tema, veja o que acertou e o que errou e leia o porquê.</p></button>
+  </div>
+  <div class="row" style="margin-bottom:6px"><button class="btn pri" data-act="reviewErrors" ${badN?'':'disabled'}>Revisar meus erros (${badN})</button>
+  <span class="hint">${badN?'Treino só com as perguntas que você errou por último.':'Nenhum erro pendente ainda.'}</span></div>
+  <div class="sec"><h2>Seu progresso por tema</h2><span class="hint">${okN} dominadas · ${badN} a revisar</span></div>
+  <div class="card">${cats}</div>
+  ${sess.length?`<div class="sec"><h2>Últimas sessões</h2></div><div class="card"><ul class="hist">${sess.map(s=>`<li><span>${esc(s.k)} · ${esc(s.d)}</span><b>${s.ok}/${s.n} (${Math.round(s.ok/s.n*100)}%)</b></li>`).join('')}</ul></div>`:''}
+  <div class="foot"><span>Seu histórico fica salvo neste navegador.</span>
+  <button class="btn sm" data-act="reset">${S.confirmReset?'Clique de novo para apagar tudo':'Zerar histórico'}</button></div>`;
+}
+
+/* ===== Treino sem limites ===== */
+function practiceSetupV(){
+  return `<div class="card"><h2 style="margin-bottom:6px">Treino sem limites</h2><p class="hint" style="margin-bottom:18px">Responda quantas quiser. Quando acabar o banco, ele recomeça.</p>
+  <div class="field"><span class="lbl">Temas</span>${chips()}<span class="hint">${pool().length} perguntas selecionadas</span></div>
+  <div class="field"><span class="lbl">Ordem</span><div class="chips">
+   <button class="chip" aria-pressed="${S.prio}" data-act="prio" data-v="1">Erros primeiro, depois novas</button>
+   <button class="chip" aria-pressed="${!S.prio}" data-act="prio" data-v="0">Tudo misturado</button></div></div>
+  <button class="btn pri" data-act="startPractice">Começar</button></div>`;
+}
+function buildQueue(ids){
+  const a=shuffle(ids.slice());
+  if(S.prio){const rk=id=>{const h=store.h[id];return !h?1:(h.last==='w'?0:2)};a.sort((x,y)=>rk(x)-rk(y))}
+  return a;
+}
+function startPractice(ids,title){
+  S.pr={ids:ids.slice(),queue:buildQueue(ids),cur:null,ok:0,bad:0,streak:0,best:0,title:title||'Treino sem limites',n:0,wrapped:false};
+  nextPractice();go('practice');
+}
+function nextPractice(){
+  const p=S.pr;
+  if(!p.queue.length){p.queue=buildQueue(p.ids);p.wrapped=p.n>0}
+  p.cur=present(p.queue.shift());
+}
+function practiceV(){
+  const p=S.pr,c=p.cur,answered=c.picked!=null;
+  return `<div class="bar"><span class="pill">${esc(p.title)}</span>
+   <span class="hint" aria-live="polite">${p.ok} certas · ${p.bad} erradas · sequência ${p.streak} (melhor ${p.best})</span>
+   <button class="btn sm" data-act="endPractice">Encerrar</button></div>
+  <div class="card">${p.wrapped&&p.n>0&&!answered&&p.n%p.ids.length===0?'<p class="hint" style="margin-bottom:10px">Você passou por todas as perguntas desta seleção. Recomeçando.</p>':''}
+  ${catTag(Q[c.id].cat)}<div class="qtext">${esc(Q[c.id].q)}</div>${opts(c,'live')}
+  ${answered?explain(c,false)+`<div class="nav"><span></span><button class="btn pri" id="nextBtn" data-act="nextPractice">Próxima pergunta →</button></div>`:''}</div>
+  <p class="hint" style="margin-top:10px">Atalhos: teclas 1 a 4 respondem, Enter avança.</p>`;
+}
+function pickPractice(di){
+  const p=S.pr,c=p.cur;if(c.picked!=null)return;
+  c.picked=di;const ok=isOk(c);record(c.id,ok,Q[c.id].o[c.order[di]]);
+  p.n++;if(ok){p.ok++;p.streak++;p.best=Math.max(p.best,p.streak)}else{p.bad++;p.streak=0}
+  render();const b=$('#nextBtn');if(b)b.focus({preventScroll:true});
+  const f=document.querySelector('.fb');if(f)f.scrollIntoView({block:'nearest'});
+}
+function endPractice(){
+  const p=S.pr;if(p.n>0){store.sess.push({k:'Treino',d:new Date().toLocaleDateString('pt-BR'),ok:p.ok,n:p.n});store.sess=store.sess.slice(-50);save()}
+  go('home');
+}
+
+/* ===== Prova ===== */
+function examSetupV(){
+  const max=pool().length;const n=Math.min(S.exN,max);
+  const total=n*S.pace;
+  return `<div class="card"><h2 style="margin-bottom:6px">Modo prova</h2><p class="hint" style="margin-bottom:18px">Sem resposta na hora. O resultado, o gabarito e as explicações aparecem no final.</p>
+  <div class="field"><span class="lbl">Temas</span>${chips()}<span class="hint">${max} perguntas disponíveis</span></div>
+  <div class="field"><span class="lbl">Número de perguntas</span><div class="chips">${[10,20,30,50].map(x=>`<button class="chip" aria-pressed="${S.exN===x}" data-act="exN" data-v="${x}">${x}</button>`).join('')}</div></div>
+  <div class="field"><span class="lbl">Ritmo</span><div class="chips">${[['Apertado',60],['Normal',90],['Tranquilo',120]].map(([l,v])=>`<button class="chip" aria-pressed="${S.pace===v}" data-act="pace" data-v="${v}">${l} · ${v}s por pergunta</button>`).join('')}</div>
+  <span class="hint">${n} perguntas em ${fmt(total)}. Meta de aprovação: 70% de acertos.</span></div>
+  <button class="btn pri" data-act="startExam">Iniciar prova</button></div>`;
+}
+function startExam(){
+  const ids=shuffle(pool()).slice(0,S.exN);if(!ids.length)return;
+  const total=ids.length*S.pace;
+  S.ex={items:ids.map(present),idx:0,total,end:Date.now()+total*1000,confirm:false};
+  go('exam');
+  S.tid=setInterval(tick,500);
+}
+function tick(){
+  if(!S.ex)return;
+  const left=Math.max(0,Math.round((S.ex.end-Date.now())/1000));
+  const el=$('#clock');if(el){el.textContent=fmt(left);el.parentElement.classList.toggle('low',left<=Math.max(60,S.ex.total*0.1))}
+  if(left<=0)finishExam(true);
+}
+function examV(){
+  const e=S.ex,p=e.items[e.idx],ansN=e.items.filter(i=>i.picked!=null).length;
+  const left=Math.max(0,Math.round((e.end-Date.now())/1000));
+  return `<div class="bar"><span class="pill">Pergunta ${e.idx+1} de ${e.items.length}</span>
+   <span class="pill ${left<=Math.max(60,e.total*0.1)?'low':''}">Tempo: <span id="clock">${fmt(left)}</span></span></div>
+  <div class="card">${catTag(Q[p.id].cat)}<div class="qtext">${esc(Q[p.id].q)}</div>${opts(p,'exam')}
+  <div class="nav"><button class="btn" data-act="exPrev" ${e.idx===0?'disabled':''}>← Anterior</button>
+   <button class="btn" data-act="flag" aria-pressed="${p.flag}">${p.flag?'Marcada para revisar':'Marcar para revisar'}</button>
+   <button class="btn" data-act="exNext" ${e.idx===e.items.length-1?'disabled':''}>Próxima →</button></div></div>
+  <div class="card" style="margin-top:12px"><div class="row" style="justify-content:space-between"><span class="hint">${ansN} de ${e.items.length} respondidas</span>
+   ${e.confirm?`<span class="row"><span>${e.items.length-ansN?`Faltam ${e.items.length-ansN} sem resposta. Entregar mesmo assim?`:'Entregar a prova?'}</span><button class="btn pri sm" data-act="finishExam">Sim, entregar</button><button class="btn sm" data-act="cancelFinish">Voltar</button></span>`:`<button class="btn pri" data-act="askFinish">Entregar prova</button>`}</div>
+  <div class="grid">${e.items.map((it,i)=>`<button class="gn${it.picked!=null?' done':''}${it.flag?' flag':''}${i===e.idx?' cur':''}" data-act="jump" data-i="${i}" aria-label="Pergunta ${i+1}">${i+1}</button>`).join('')}</div></div>`;
+}
+function finishExam(timeUp){
+  stopTimer();const e=S.ex;
+  const used=Math.min(e.total,Math.round((Date.now()-(e.end-e.total*1000))/1000));
+  let ok=0;e.items.forEach(it=>{if(it.picked!=null){const g=isOk(it);record(it.id,g,Q[it.id].o[it.order[it.picked]]);if(g)ok++}});
+  store.sess.push({k:'Prova',d:new Date().toLocaleDateString('pt-BR'),ok,n:e.items.length});store.sess=store.sess.slice(-50);save();
+  S.res={kind:'exam',items:e.items,ok,n:e.items.length,used,timeUp:!!timeUp};
+  S.onlyWrong=false;go('result');
+}
+
+/* ===== Quiz ===== */
+function quizSetupV(){
+  return `<div class="card"><h2 style="margin-bottom:6px">Quiz</h2><p class="hint" style="margin-bottom:18px">10 perguntas, 20 segundos cada. Você vê se acertou logo após responder. Quanto mais rápido e mais seguido você acertar, mais pontos.</p>
+  <div class="field"><span class="lbl">Temas</span>${chips()}<span class="hint">${pool().length} perguntas disponíveis · recorde: ${store.best||0} pontos</span></div>
+  <button class="btn pri" data-act="startQuiz">Começar quiz</button></div>`;
+}
+const QT=20;
+function startQuiz(){
+  const ids=shuffle(pool()).slice(0,10);if(!ids.length)return;
+  S.qz={items:ids.map(present),idx:0,pts:0,streak:0,bestStreak:0,ok:0,gain:0,locked:false,end:0};
+  go('quiz');startQ();
+}
+function startQ(){
+  const z=S.qz;z.locked=false;z.gain=0;z.end=Date.now()+QT*1000;
+  stopTimer();
+  S.tid=setInterval(()=>{
+    const left=Math.max(0,(z.end-Date.now())/1000);
+    const b=$('#qbar');if(b){b.style.width=(left/QT*100)+'%';b.parentElement.classList.toggle('low',left<=6)}
+    const s=$('#qsec');if(s)s.textContent=Math.ceil(left)+'s';
+    if(left<=0)answerQuiz(-1);
+  },200);
+}
+function quizV(){
+  const z=S.qz,p=z.items[z.idx],last=z.idx===z.items.length-1;
+  const left=Math.max(0,(z.end-Date.now())/1000);
+  return `<div class="bar"><span class="pill">Pergunta ${z.idx+1} de ${z.items.length}</span>
+   <span class="pill">${z.pts} pontos</span><span class="pill">Sequência ${z.streak}</span></div>
+  ${z.locked?'':`<div class="timerbar"><i id="qbar" style="width:${left/QT*100}%"></i></div><div class="hint" style="text-align:right;margin:-8px 0 8px">Tempo: <span id="qsec">${Math.ceil(left)}s</span></div>`}
+  <div class="card">${catTag(Q[p.id].cat)}<div class="qtext">${esc(Q[p.id].q)}</div>${opts(p,'live')}
+  ${z.locked?explain(p,p.picked===-1)+`<p class="hint" style="margin-top:10px">${isOk(p)?`+${z.gain} pontos`:'Sem pontos nesta pergunta'}</p><div class="nav"><span></span><button class="btn pri" id="nextBtn" data-act="nextQuiz">${last?'Ver resultado':'Próxima →'}</button></div>`:''}</div>`;
+}
+function answerQuiz(di){
+  const z=S.qz;if(!z||z.locked)return;
+  z.locked=true;stopTimer();
+  const p=z.items[z.idx];p.picked=di;const left=Math.max(0,(z.end-Date.now())/1000);
+  const ok=isOk(p);
+  record(p.id,ok,di>=0?Q[p.id].o[p.order[di]]:'(sem resposta no tempo)');
+  if(ok){z.streak++;z.bestStreak=Math.max(z.bestStreak,z.streak);z.ok++;z.gain=100+Math.round(left)*5+Math.min(z.streak-1,5)*10;z.pts+=z.gain}
+  else z.streak=0;
+  render();const b=$('#nextBtn');if(b)b.focus({preventScroll:true});
+}
+function nextQuiz(){
+  const z=S.qz;
+  if(z.idx>=z.items.length-1){
+    const rec=z.pts>(store.best||0);if(rec)store.best=z.pts;
+    store.sess.push({k:'Quiz',d:new Date().toLocaleDateString('pt-BR'),ok:z.ok,n:z.items.length});store.sess=store.sess.slice(-50);save();
+    S.res={kind:'quiz',items:z.items,ok:z.ok,n:z.items.length,pts:z.pts,bestStreak:z.bestStreak,rec};
+    S.onlyWrong=false;go('result');return;
+  }
+  z.idx++;render();startQ();window.scrollTo(0,0);
+}
+
+/* ===== Resultado ===== */
+function reviewItem(it,i,open){
+  const q=Q[it.id],na=it.picked==null,ok=isOk(it);
+  const cls=na?'na':(ok?'ok':'bad');
+  return `<details class="rv ${cls}" ${open&&!ok?'open':''}><summary><span class="mk">${na?'–':(ok?'✓':'✗')}</span><span>${i+1}. ${esc(q.q)}</span></summary>
+  <div class="inner">${catTag(q.cat)}${opts(it,'review')}${na?`<div class="fb to"><h3>Sem resposta</h3><p><b>Resposta certa:</b> ${esc(q.o[0])}</p><div class="why"><p style="margin-top:10px"><b>Por quê</b>${esc(q.e)}</p></div></div>`:explain(it,it.picked===-1)}</div></details>`;
+}
+function resultV(){
+  const r=S.res,pct=Math.round(r.ok/r.n*100);
+  const verdict=pct>=70?['ok','Dentro da meta']:(pct>=50?['mid','Perto da meta']:['bad','Precisa revisar']);
+  const bycat={};r.items.forEach(it=>{const c=Q[it.id].cat;(bycat[c]||(bycat[c]={ok:0,n:0}));bycat[c].n++;if(isOk(it))bycat[c].ok++});
+  const wrong=r.items.filter(it=>!isOk(it)).length;
+  const list=r.items.map((it,i)=>({it,i})).filter(x=>!S.onlyWrong||!isOk(x.it));
+  return `<div class="card"><div class="score"><div class="big">${pct}%</div><div>
+   <div class="verdict ${verdict[0]}">${verdict[1]}</div>
+   <p style="margin-top:8px">${r.ok} de ${r.n} certas${r.kind==='exam'?` · tempo usado ${fmt(r.used)}${r.timeUp?' (tempo esgotado)':''}`:` · ${r.pts} pontos · melhor sequência ${r.bestStreak}${r.rec?' · novo recorde!':''}`}</p>
+   ${r.kind==='exam'?'<p class="hint">Meta de aprovação: 70%.</p>':''}</div></div></div>
+  <div class="sec"><h2>Por tema</h2></div>
+  <div class="card">${Object.entries(bycat).map(([k,v])=>`<div class="catrow"><div class="catname"><span class="dot" style="background:${CATS[k][1]}"></span>${esc(CATS[k][0])}</div>
+   <div class="seg"><i class="s-ok" style="width:${v.ok/v.n*100}%"></i><i class="s-bad" style="width:${(v.n-v.ok)/v.n*100}%"></i></div><div class="catnum">${v.ok}/${v.n}</div></div>`).join('')}</div>
+  <div class="sec"><h2>Correção e explicações</h2>
+   <div class="chips"><button class="chip" aria-pressed="${!S.onlyWrong}" data-act="onlyWrong" data-v="0">Todas (${r.n})</button><button class="chip" aria-pressed="${S.onlyWrong}" data-act="onlyWrong" data-v="1">Só erros e em branco (${wrong})</button></div></div>
+  ${list.length?list.map(x=>reviewItem(x.it,x.i,true)).join(''):'<div class="card empty">Nenhum erro nesta sessão.</div>'}
+  <div class="row" style="margin-top:18px"><button class="btn pri" data-act="again">Refazer com outras perguntas</button><button class="btn" data-act="home">Voltar ao início</button></div>`;
+}
+
+/* ===== Biblioteca ===== */
+function libraryV(){
+  return `<div class="card"><div class="row" style="margin-bottom:12px">
+   <select class="search" id="libCat" aria-label="Tema"><option value="all">Todos os temas</option>${Object.entries(CATS).map(([k,c])=>`<option value="${k}" ${S.lib.cat===k?'selected':''}>${esc(c[0])}</option>`).join('')}</select>
+   <input class="search" id="libQ" type="search" placeholder="Buscar por palavra" value="${esc(S.lib.q)}" style="flex:1;min-width:180px"></div>
+   <div class="chips" id="libSt">${[['all','Todas'],['ok','Acertei'],['bad','Errei'],['new','Ainda não vistas']].map(([v,l])=>`<button class="chip" aria-pressed="${S.lib.st===v}" data-act="libst" data-v="${v}">${l}</button>`).join('')}</div></div>
+  <div class="row" style="margin:14px 0;justify-content:space-between"><span class="hint" id="libCount"></span><button class="btn sm" id="libTrain" data-act="libTrain">Treinar estas</button></div>
+  <div id="libList"></div>`;
+}
+function libFiltered(){
+  const f=S.lib,qq=f.q.trim().toLowerCase();
+  return Q.filter(q=>(f.cat==='all'||q.cat===f.cat)&&(f.st==='all'||status(q.id)===f.st)&&(!qq||(q.q+' '+q.o.join(' ')+' '+q.e).toLowerCase().includes(qq)));
+}
+function renderLib(){
+  const list=libFiltered();
+  const c=$('#libCount');if(c)c.textContent=list.length+(list.length===1?' pergunta':' perguntas');
+  const t=$('#libTrain');if(t)t.disabled=!list.length;
+  const el=$('#libList');if(!el)return;
+  if(!list.length){el.innerHTML='<div class="card empty">Nenhuma pergunta com esses filtros.</div>';return}
+  el.innerHTML=list.map(q=>{
+    const st=status(q.id),h=store.h[q.id];
+    const badge=st==='ok'?'<span class="badge ok">Acertei</span>':(st==='bad'?'<span class="badge bad">Errei</span>':'<span class="badge new">Não vista</span>');
+    return `<details class="rv ${st==='ok'?'ok':st==='bad'?'bad':'na'}"><summary><span class="mk">${st==='ok'?'✓':st==='bad'?'✗':'·'}</span><span>${esc(q.q)}</span></summary>
+    <div class="inner">${catTag(q.cat)}<div class="opts">${q.o.map((o,i)=>`<div class="opt ${i===0?'ok':'dim'}" style="cursor:default"><span class="ltr">${i===0?'✓':'·'}</span><span>${esc(o)}</span></div>`).join('')}</div>
+    <div class="fb ${st==='bad'?'bad':'ok'}" style="${st==='new'?'background:var(--accent-soft);border-color:var(--line)':''}">
+      ${st==='bad'&&h&&h.lp?`<p><b>Você marcou por último:</b> ${esc(h.lp)}</p>`:''}
+      <div class="why"><p><b>Por quê</b>${esc(q.e)}</p></div></div>
+    <div class="lib-meta">${badge}<span>${h?`${h.r} acertos · ${h.w} erros`:'Sem histórico'}</span></div></div></details>`}).join('');
+}
+
+/* ===== Render e eventos ===== */
+function render(){
+  const V={home:homeV,practiceSetup:practiceSetupV,practice:practiceV,examSetup:examSetupV,exam:examV,quizSetup:quizSetupV,quiz:quizV,result:resultV,library:libraryV};
+  $('#app').innerHTML=header()+V[S.view]();
+  if(S.view==='library')renderLib();
+}
+const A={
+  home(){if(S.view==='practice'){endPractice();return}if(S.view==='exam'&&S.ex&&!S.ex.done){stopTimer()}go('home')},
+  go(t){go(t.dataset.v)},
+  allcats(){S.sel.clear();render()},
+  togcat(t){const c=t.dataset.c;S.sel.has(c)?S.sel.delete(c):S.sel.add(c);render()},
+  prio(t){S.prio=t.dataset.v==='1';render()},
+  startPractice(){const ids=pool();if(ids.length)startPractice(ids)},
+  reviewErrors(){const ids=Q.filter(q=>status(q.id)==='bad').map(q=>q.id);if(ids.length){S.prio=false;startPractice(ids,'Revisão de erros')}},
+  nextPractice(){nextPractice();render();window.scrollTo(0,0)},
+  endPractice(){endPractice()},
+  pick(t){
+    const di=+t.dataset.i;
+    if(S.view==='practice')pickPractice(di);
+    else if(S.view==='quiz')answerQuiz(di);
+    else if(S.view==='exam'){const p=S.ex.items[S.ex.idx];p.picked=p.picked===di?null:di;render()}
+  },
+  exN(t){S.exN=+t.dataset.v;render()},
+  pace(t){S.pace=+t.dataset.v;render()},
+  startExam(){startExam()},
+  exPrev(){S.ex.idx=Math.max(0,S.ex.idx-1);S.ex.confirm=false;render()},
+  exNext(){S.ex.idx=Math.min(S.ex.items.length-1,S.ex.idx+1);S.ex.confirm=false;render()},
+  jump(t){S.ex.idx=+t.dataset.i;S.ex.confirm=false;render()},
+  flag(){const p=S.ex.items[S.ex.idx];p.flag=!p.flag;render()},
+  askFinish(){S.ex.confirm=true;render()},
+  cancelFinish(){S.ex.confirm=false;render()},
+  finishExam(){finishExam(false)},
+  startQuiz(){startQuiz()},
+  nextQuiz(){nextQuiz()},
+  onlyWrong(t){S.onlyWrong=t.dataset.v==='1';render()},
+  again(){const k=S.res.kind;if(k==='exam')startExam();else startQuiz()},
+  libst(t){S.lib.st=t.dataset.v;document.querySelectorAll('#libSt .chip').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.v===S.lib.st)));renderLib()},
+  libTrain(){const ids=libFiltered().map(q=>q.id);if(ids.length){S.prio=false;startPractice(ids,'Treino da biblioteca')}},
+  reset(){if(!S.confirmReset){S.confirmReset=true;render();return}store={h:{},sess:[],best:0};save();S.confirmReset=false;render()}
+};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t||t.disabled)return;const f=A[t.dataset.act];if(f)f(t)});
+document.addEventListener('change',e=>{if(e.target.id==='libCat'){S.lib.cat=e.target.value;renderLib()}});
+document.addEventListener('input',e=>{if(e.target.id==='libQ'){S.lib.q=e.target.value;renderLib()}});
+document.addEventListener('keydown',e=>{
+  if(e.target.matches&&e.target.matches('input,select,textarea'))return;
+  const k=e.key;
+  if(['1','2','3','4'].includes(k)){
+    const i=+k-1;
+    if(S.view==='practice')pickPractice(i);
+    else if(S.view==='quiz')answerQuiz(i);
+    else if(S.view==='exam'){const p=S.ex.items[S.ex.idx];p.picked=p.picked===i?null:i;render()}
+  }else if(k==='Enter'){
+    if(S.view==='practice'&&S.pr.cur.picked!=null){e.preventDefault();A.nextPractice()}
+    else if(S.view==='quiz'&&S.qz.locked){e.preventDefault();nextQuiz()}
+  }
+});
+render();
+</script>
+
+</body></html>
